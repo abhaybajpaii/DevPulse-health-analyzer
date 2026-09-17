@@ -1,0 +1,148 @@
+@import "tailwindcss";
+
+/* ─── Design tokens ──────────────────────────────────────────────────── */
+:root {
+  --glow-indigo: 0 0 20px rgba(99, 102, 241, 0.4);
+  --glow-emerald: 0 0 20px rgba(52, 211, 153, 0.35);
+  --glow-amber: 0 0 20px rgba(251, 191, 36, 0.35);
+  --glow-rose: 0 0 16px rgba(244, 63, 94, 0.35);
+  --border-glass: rgba(255, 255, 255, 0.06);
+  --bg-card: rgba(15, 23, 42, 0.85);
+}
+
+@theme inline {
+  --color-background: #020817;
+  --color-foreground: #f1f5f9;
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* ─── Global resets ──────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  background: #020817;
+  color: #f1f5f9;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Custom scrollbar ───────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #6366f1;
+}
+
+/* ─── Glassmorphism cards ────────────────────────────────────────────── */
+.glass-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* ─── Glow utilities ─────────────────────────────────────────────────── */
+.glow-indigo {
+  box-shadow: var(--glow-indigo);
+}
+.glow-emerald {
+  box-shadow: var(--glow-emerald);
+}
+.glow-amber {
+  box-shadow: var(--glow-amber);
+}
+
+/* ─── Radial gauge animation ─────────────────────────────────────────── */
+@keyframes gauge-fill {
+  from {
+    stroke-dashoffset: var(--gauge-full);
+  }
+  to {
+    stroke-dashoffset: var(--gauge-offset);
+  }
+}
+
+.gauge-arc {
+  animation: gauge-fill 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* ─── Skeleton shimmer ───────────────────────────────────────────────── */
+@keyframes shimmer {
+  0% {
+    background-position: -600px 0;
+  }
+  100% {
+    background-position: 600px 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    #1e293b 25%,
+    #273449 50%,
+    #1e293b 75%
+  );
+  background-size: 600px 100%;
+  animation: shimmer 1.6s infinite linear;
+  border-radius: 6px;
+}
+
+/* ─── Tab underline animation ────────────────────────────────────────── */
+.tab-active::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #6366f1, #34d399);
+  border-radius: 9999px;
+}
+
+/* ─── Cyberpunk grid background ──────────────────────────────────────── */
+.cyber-grid {
+  background-image:
+    linear-gradient(rgba(99, 102, 241, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99, 102, 241, 0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* ─── Pulse dot animation ────────────────────────────────────────────── */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.85); }
+}
+.pulse-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+/* ─── Score tier colors ──────────────────────────────────────────────── */
+.score-excellent { color: #34d399; }
+.score-good      { color: #6366f1; }
+.score-warning   { color: #fbbf24; }
+.score-critical  { color: #f43f5e; }
+
+/* ─── Print styles for PDF export ───────────────────────────────────── */
+@media print {
+  .no-print { display: none !important; }
+  body { background: white !important; color: black !important; }
+  .glass-card { border: 1px solid #e2e8f0 !important; background: white !important; }
+}
